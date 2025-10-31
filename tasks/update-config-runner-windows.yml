@@ -202,6 +202,28 @@
   check_mode: false
   notify: restart_gitlab_runner_windows
 
+- name: "Set docker cpus option {{ runn_name_prefix }}"
+  community.windows.win_lineinfile:
+    dest: "{{ temp_runner_config.path }}"
+    regexp: ^\s*cpus =.*
+    line: '  cpus = {{ gitlab_runner.docker_cpus | default("") | to_json }}'
+    state: "{{ 'present' if gitlab_runner.docker_cpus is defined else 'absent' }}"
+    insertafter: ^\s*executor =
+    backrefs: false
+  check_mode: false
+  notify: restart_gitlab_runner_windows
+
+- name: "Set docker cpu_shares option {{ runn_name_prefix }}"
+  community.windows.win_lineinfile:
+    dest: "{{ temp_runner_config.path }}"
+    regexp: ^\s*cpu_shares =.*
+    line: '  cpu_shares = {{ gitlab_runner.docker_cpu_shares | default(0) | to_json }}'
+    state: "{{ 'present' if gitlab_runner.docker_cpu_shares is defined else 'absent' }}"
+    insertafter: ^\s*executor =
+    backrefs: false
+  check_mode: false
+  notify: restart_gitlab_runner_windows
+
 - name: "Set cache type option {{ runn_name_prefix }}"
   community.windows.win_lineinfile:
     dest: "{{ temp_runner_config.path }}"

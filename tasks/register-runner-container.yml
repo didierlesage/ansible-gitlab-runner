@@ -54,6 +54,12 @@
       {% if gitlab_runner.docker_hostname is defined %}
       --docker-hostname '{{ gitlab_runner.docker_hostname }}'
       {% endif %}
+      {% if gitlab_runner.docker_cpus is defined %}
+      --docker-cpus '{{ gitlab_runner.docker_cpus }}'
+      {% endif %}
+      {% if gitlab_runner.docker_cpu_shares is defined %}
+      --docker-cpu-shares '{{ gitlab_runner.docker_cpu_shares }}'
+      {% endif %}
       --ssh-user '{{ gitlab_runner.ssh_user | default("") }}'
       --ssh-host '{{ gitlab_runner.ssh_host | default("") }}'
       --ssh-port '{{ gitlab_runner.ssh_port | default("") }}'

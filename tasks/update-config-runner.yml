@@ -397,6 +397,35 @@
     - restart_gitlab_runner
     - restart_gitlab_runner_macos
 
+- name: "Set runner docker cpus {{ runn_name_prefix }}"
+  ansible.builtin.lineinfile:
+    dest: "{{ temp_runner_config.path }}"
+    regexp: ^\s*cpus =
+    line: '    cpus = {{ gitlab_runner.docker_cpus | default("") | to_json }}'
+    state: "{{ 'present' if gitlab_runner.docker_cpus is defined else 'absent' }}"
+    insertafter: ^\s*\[runners\.docker\]
+    backrefs: false
+  check_mode: false
+  no_log: "{{ gitlab_runner_no_log_secrets | default(omit) }}"
+  notify:
+    - restart_gitlab_runner
+    - restart_gitlab_runner_macos
+
+- name: "Set runner docker cpu_shares {{ runn_name_prefix }}"
+  ansible.builtin.lineinfile:
+    dest: "{{ temp_runner_config.path }}"
+    regexp: ^\s*cpu_shares =
+    line: '    cpu_shares = {{ gitlab_runner.docker_cpu_shares | default(0) | to_json }}'
+    state: "{{ 'present' if gitlab_runner.docker_cpu_shares is defined else 'absent' }}"
+    insertafter: ^\s*\[runners\.docker\]
+    backrefs: false
+  check_mode: false
+  no_log: "{{ gitlab_runner_no_log_secrets | default(omit) }}"
+  notify:
+    - restart_gitlab_runner
+    - restart_gitlab_runner_macos
+
+
 - name: "Set tls-cert-file option {{ runn_name_prefix }}"
   ansible.builtin.lineinfile:
     dest: "{{ temp_runner_config.path }}"

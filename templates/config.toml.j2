@@ -118,6 +118,12 @@ sentry_dsn = "{{ gitlab_runner_sentry_dsn }}"
 {% if gitlab_runner.docker_hostname is defined %}
     hostname = {{ gitlab_runner.docker_hostname | default("") | tojson }}
 {% endif %}
+{% if gitlab_runner.docker_cpus is defined %}
+    cpus = {{ gitlab_runner.docker_cpus | default("") | tojson }}
+{% endif %}
+{% if gitlab_runner.docker_cpu_shares is defined %}
+    cpu_shares = {{ gitlab_runner.docker_cpu_shares | default(0) | tojson }}
+{% endif %}
 {% if gitlab_runner.docker_disable_entrypoint_overwrite is defined %}
     disable_entrypoint_overwrite = {{ gitlab_runner.docker_disable_entrypoint_overwrite | default(false) | tojson }}
 {% endif %}
