@@ -33,6 +33,12 @@
       {% if gitlab_runner.docker_privileged | default(false) %}
       --docker-privileged
       {% endif %}
+      {% for policy in gitlab_runner.docker_allowed_pull_policies | default([]) %}
+      --docker-allowed-pull-policies "{{ policy }}"
+      {% endfor %}
+      {% for policy in gitlab_runner.docker_pull_policy | default([]) %}
+      --docker-pull-policy "{{ policy }}"
+      {% endfor %}
       {% for volume in gitlab_runner.docker_volumes | default([]) %}
       --docker-volumes "{{ volume }}"
       {% endfor %}
