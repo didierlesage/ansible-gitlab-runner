@@ -169,7 +169,7 @@
       --custom-prepare-exec '{{ gitlab_runner.custom_prepare_exec }}'
       {% endif %}
       {% if gitlab_runner.custom_prepare_args is defined %}
-      ---custom-prepare-args '{{ gitlab_runner.custom_prepare_args }}'
+      --custom-prepare-args '{{ gitlab_runner.custom_prepare_args }}'
       {% endif %}
       {% if gitlab_runner.custom_run_exec is defined %}
       --custom-run-exec '{{ gitlab_runner.custom_run_exec }}'
