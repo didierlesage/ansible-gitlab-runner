@@ -50,7 +50,9 @@
       {% if gitlab_runner.tls_ca_file | default(false) %}
       --tls-ca-file "{{ gitlab_runner.tls_ca_file }}"
       {% endif %}
+      {% if gitlab_runner.docker_image is defined %}
       --docker-image '{{ gitlab_runner.docker_image | default("alpine") }}'
+      {% endif %}
       {% if gitlab_runner.docker_helper_image is defined %}
       --docker-helper-image "{{ gitlab_runner.docker_helper_image }}"
       {% endif %}
@@ -99,11 +101,13 @@
       {% if gitlab_runner.docker_cpu_shares is defined %}
       --docker-cpu-shares '{{ gitlab_runner.docker_cpu_shares }}'
       {% endif %}
+      {% if gitlab_runner.executor == "ssh" %}
       --ssh-user '{{ gitlab_runner.ssh_user | default("") }}'
       --ssh-host '{{ gitlab_runner.ssh_host | default("") }}'
       --ssh-port '{{ gitlab_runner.ssh_port | default("") }}'
       --ssh-identity-file '{{ gitlab_runner.ssh_identity_file | default("") }}'
       --ssh-disable-strict-host-key-checking '{{ gitlab_runner.ssh_disable_strict_host_key_checking | default("false") }}'
+      {% endif %}
       {% if gitlab_runner.executor == "virtualbox" and gitlab_runner.virtualbox_base_name %}
           --virtualbox-base-name '{{ gitlab_runner.virtualbox_base_name }}'
           --virtualbox-base-snapshot '{{ gitlab_runner.virtualbox_base_snapshot | default("") }}'
