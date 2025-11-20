@@ -101,6 +101,15 @@
       {% if gitlab_runner.docker_cpu_shares is defined %}
       --docker-cpu-shares '{{ gitlab_runner.docker_cpu_shares }}'
       {% endif %}
+      {% if gitlab_runner.docker_memory is defined %}
+      --docker-memory '{{ gitlab_runner.docker_memory }}'
+      {% endif %}
+      {% if gitlab_runner.docker_memory_swap is defined %}
+      --docker-memory-swap '{{ gitlab_runner.docker_memory_swap }}'
+      {% endif %}
+      {% if gitlab_runner.docker_memory_reservation is defined %}
+      --docker-memory-reservation '{{ gitlab_runner.docker_memory_reservation }}'
+      {% endif %}
       {% if gitlab_runner.executor == "ssh" %}
       --ssh-user '{{ gitlab_runner.ssh_user | default("") }}'
       --ssh-host '{{ gitlab_runner.ssh_host | default("") }}'
